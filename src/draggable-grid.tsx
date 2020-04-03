@@ -53,7 +53,7 @@ function useAnimatedValue(initialValue: number) {
   return React.useMemo(() => new Animated.Value(initialValue), [])
 }
 
-export const DraggableGrid = function<DataType extends IBaseItemType>(
+export const DraggableGrid = function <DataType extends IBaseItemType>(
   props: IDraggableGridProps<DataType>,
 ) {
   const [blockHeight, setBlockHeight] = useState(0)

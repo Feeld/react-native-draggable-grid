@@ -1,14 +1,13 @@
 {
-  "name": "react-native-draggable-grid",
+  "name": "@th3rdwave/react-native-draggable-grid",
   "keywords": [
     "drag",
     "sortable",
     "grid"
   ],
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A draggable grid for react native",
-  "main": "built/src/index.js",
-  "types": "src/index.ts",
+  "main": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/SHISME/react-native-draggable-grid"
@@ -42,22 +41,22 @@
   "author": "shisme",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "@types/react": "^16.0.0",
+    "@types/jest": "^25.1.5",
+    "@types/react": "^16.9.32",
     "@types/react-native": "*",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
+    "babel-jest": "^25.2.6",
+    "jest": "^25.2.6",
     "jest-react-native": "^18.0.0",
     "pre-commit": "^1.2.2",
-    "react": "^16.0.0",
-    "react-native": "*",
+    "react": "^16.13.1",
+    "react-native": "^0.62.0",
     "react-native-gesture-handler": "^1.6.1",
-    "ts-jest": "^24.0.2",
-    "prettier": "^1.18.2",
-    "typescript": "^3.0.3"
+    "ts-jest": "^25.3.0",
+    "prettier": "^2.0.2",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
+    "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": "*"
   }

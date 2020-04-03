@@ -1,13 +1,7 @@
 /** @format */
 
 import * as React from 'react'
-import {
-  Animated,
-  StyleProp,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  GestureResponderHandlers,
-} from 'react-native'
+import { Animated, StyleProp, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { FunctionComponent } from 'react'
 
 interface BlockProps {

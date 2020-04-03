@@ -1,3 +1,5 @@
+/** @format */
+
 function findKey<T>(map: { [key: string]: T }, fn: (item: T) => boolean) {
   const keys = Object.keys(map)
   for (let i = 0; i < keys.length; i++) {
