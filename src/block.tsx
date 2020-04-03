@@ -1,8 +1,9 @@
 /** @format */
 
 import * as React from 'react'
-import { Animated, StyleProp, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { Animated, StyleProp, StyleSheet } from 'react-native'
 import { FunctionComponent } from 'react'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 interface BlockProps {
   style?: StyleProp<any>
