@@ -250,9 +250,11 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
       toValue,
       duration: 200,
       useNativeDriver: USE_NATIVE_DRIVER,
-    }).start(() => {
-      items.current[itemIndex].currentPosition.setOffset(toValue)
-      items.current[itemIndex].currentPosition.setValue({ x: 0, y: 0 })
+    }).start(({ finished }) => {
+      if (finished) {
+        items.current[itemIndex].currentPosition.setOffset(toValue)
+        items.current[itemIndex].currentPosition.setValue({ x: 0, y: 0 })
+      }
     })
   }
 
