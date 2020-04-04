@@ -123,7 +123,7 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
 
   function onStartDrag(gestureState: PanGestureHandlerStateChangeEvent['nativeEvent']) {
     const activeItem = getActiveItem()
-    if (!activeItem) return false
+    if (!activeItem) return
     props.onDragStart && props.onDragStart(activeItem.itemData)
     isDragging.current = true
     const { translationX, translationY } = gestureState
@@ -186,7 +186,7 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
 
   function onHandRelease() {
     const activeItem = getActiveItem()
-    if (!activeItem) return false
+    if (!activeItem) return
     props.onDragRelease && props.onDragRelease(getSortData())
     setLongPressActive(false)
     activeItem.currentPosition.flattenOffset()
