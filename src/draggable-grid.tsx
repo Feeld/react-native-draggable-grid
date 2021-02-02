@@ -244,16 +244,17 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
 
   function moveBlockToBlockOrderPosition(itemKey: string) {
     const itemIndex = findIndex(items.current, item => item.key === itemKey)
-    items.current[itemIndex].currentPosition.flattenOffset()
+    const item = items.current[itemIndex];
+    item.currentPosition.flattenOffset()
     const toValue = blockPositions.current[orderMap.current[itemKey].order]
-    Animated.timing(items.current[itemIndex].currentPosition, {
+    Animated.timing(item.currentPosition, {
       toValue,
       duration: 200,
       useNativeDriver: USE_NATIVE_DRIVER,
     }).start(({ finished }) => {
       if (finished) {
-        items.current[itemIndex].currentPosition.setOffset(toValue)
-        items.current[itemIndex].currentPosition.setValue({ x: 0, y: 0 })
+        item.currentPosition.setOffset(toValue)
+        item.currentPosition.setValue({ x: 0, y: 0 })
       }
     })
   }
