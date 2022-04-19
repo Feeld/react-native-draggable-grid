@@ -11,6 +11,7 @@ interface BlockProps {
   onPress?: () => void
   onLongPress: () => void
   onPressOut: () => void
+  children?: React.ReactNode
 }
 
 export const Block: FunctionComponent<BlockProps> = ({
