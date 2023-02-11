@@ -244,7 +244,7 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
 
   function moveBlockToBlockOrderPosition(itemKey: string) {
     const itemIndex = findIndex(items.current, item => item.key === itemKey)
-    const item = items.current[itemIndex];
+    const item = items.current[itemIndex]
     item.currentPosition.flattenOffset()
     const toValue = blockPositions.current[orderMap.current[itemKey].order]
     Animated.timing(item.currentPosition, {
@@ -297,13 +297,13 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
   function getBlockStyle(itemIndex: number) {
     return [
       {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'center' as const,
+        alignItems: 'center' as const,
       },
       hadInitBlockSize && {
         width: blockWidth,
         height: blockHeight,
-        position: 'absolute',
+        position: 'absolute' as const,
         top: 0,
         left: 0,
         transform: items.current[itemIndex].currentPosition.getTranslateTransform(),
