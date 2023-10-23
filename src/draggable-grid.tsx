@@ -7,7 +7,7 @@ import {
   PanGestureHandlerStateChangeEvent,
   State as GestureState,
 } from 'react-native-gesture-handler'
-import { Animated, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { Animated, StyleSheet, StyleProp, ViewStyle, Platform } from 'react-native'
 import { Block } from './block'
 import { findKey, findIndex, differenceBy } from './utils'
 
@@ -33,7 +33,18 @@ export interface IDraggableGridProps<DataType extends IBaseItemType> {
   onItemPress?: (item: DataType) => void
   onDragStart?: (item: DataType) => void
   onDragRelease?: (newSortedData: DataType[]) => void
+  /**
+   * Event fired the moment a long press is recognized, useful for
+   * disabling the container's scrollability.
+   */
+  onPressIn?: () => void
+  /**
+   * Event fired when drag & drop gesture is complete, useful for
+   * re-enabling the container's scrollability.
+   */
+  onPressOut?: () => void
   onResetSort?: (newSortedData: DataType[]) => void
+  delayLongPress?: number | undefined;
 }
 interface IPositionOffset {
   x: number
@@ -127,16 +138,15 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
     props.onDragStart && props.onDragStart(activeItem.itemData)
     isDragging.current = true
     const { translationX, translationY } = gestureState
-    const activeOrigin = blockPositions.current[orderMap.current[activeItem.key].order]
-    const x = activeOrigin.x
-    const y = activeOrigin.y
+    const { x, y } = blockPositions.current[orderMap.current[activeItem.key].order]
     activeItem.currentPosition.setOffset({
       x,
       y,
     })
+    // Quirky Android-only behaviour requires subtracting block position below
     activeBlockOffset.current = {
-      x: translationX,
-      y: translationY,
+      x: Platform.OS === 'ios' ? translationX : translationX - x,
+      y: Platform.OS === 'ios' ? translationY : translationY - y,
     }
   }
 
@@ -436,18 +446,27 @@ export const DraggableGrid = function <DataType extends IBaseItemType>(
         key={item.key}
         onGestureEvent={item.gestureEvent}
         onHandlerStateChange={onHandlerStateChange}
-        // To make sure the pan responder doesn't activate before
-        // a long press we set a huge minimum active offset.
+        // Before long-press, to make sure the pan responder doesn't
+        // activate we set a huge minimum active offset.
         // Using enabled doesn't work since the responder is
         // completely skipped.
-        activeOffsetX={longPressActive ? 0 : 10000}
-        activeOffsetY={longPressActive ? 0 : 10000}>
+        //
+        // While long-pressing (dragging), set a tuple of offsets to
+        // allow gesture activation to be recognized in both - and +
+        // directions on both axes.
+        activeOffsetX={longPressActive ? [0, 0] : 10000}
+        activeOffsetY={longPressActive ? [0, 0] : 10000}>
         <Animated.View
           style={[getBlockStyle(itemIndex), itemIndex === activeItemIndex && { zIndex: 3 }]}>
           <Block
+            delayLongPress={props.delayLongPress}
             onPress={onBlockPress.bind(null, itemIndex)}
-            onLongPress={() => setActiveBlock(itemIndex, item.itemData)}
+            onLongPress={() => {
+              props.onPressIn?.()
+              setActiveBlock(itemIndex, item.itemData)
+            }}
             onPressOut={() => {
+              props.onPressOut?.()
               setTimeout(() => {
                 if (!panHandlerActive.current) {
                   onHandRelease()
