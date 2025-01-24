@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Animated, StyleProp, StyleSheet } from 'react-native'
 import { FunctionComponent } from 'react'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable'
+import { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchableProps'
 
 interface BlockProps
   extends Pick<GenericTouchableProps, 'onPress' | 'onLongPress' | 'onPressOut' | 'delayLongPress'> {
